@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 
 app = FastAPI()
 
@@ -7,6 +7,6 @@ def root():
     return {"status": "ok", "message": "FastAPI server is running"}
 
 @app.post("/receive")
-async def receive(data: dict):
-    print("Received data:", data)  # 👈 this will appear in Render logs
-    return {"received": data}
+async def receive(body: str = Body(..., media_type="text/plain")):
+    print("Received:", body)
+    return {"received": body}
